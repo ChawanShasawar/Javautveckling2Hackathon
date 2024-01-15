@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-<script src="script.js" defer></script>
-<link rel="stylesheet" href="style.css">
-<style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filmdatabasen</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-</style>
-
-</head>
-
-<body>
-
+  <body>
+    <header>
+      <img src="film-solid.png" />
+      <h1>Filmdatabasen</h1>
+      <p>Cihan, Mathias, Chawan, Roberto, Christopher</p>
+    </header>
     <div id="searchContainer">
-        <input type="text" id="searchMovie" placeholder="Sök film och genre" oninput="searchMovie()">
-        <input type="submit" value="Sök">
+      <input type="text" id="searchMovie" placeholder="Sök film och genre" oninput="searchMovie()" />
+      <input type="submit" value="Sök" />
     </div>
 
-    <div id= "movie">
-        <h1>Movies</h1>
+    <div id="movie">
+      <h1>Movies</h1>
 
-        <ul id="movieList"></ul>
+      <ul id="movieList"></ul>
 
-        <h2 id="relatedMovies"></h2>
+      <h2 id="relatedMovies"></h2>
 
-        <div id="movieInfo"></div>
-
+      <div id="movieInfo"></div>
     </div>
-
-
-
-    
-</body>
+  </body>
 </html>

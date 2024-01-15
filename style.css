@@ -1,0 +1,41 @@
+body {
+  background-color: #f6f6f6;
+  margin: 0;
+}
+
+header {
+  background-color: #1a1a1d;
+  padding: 0 25px;
+  border-bottom: 3px solid #3438f5;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+header img {
+  float: left;
+  margin: 23px 10px 0 0;
+  width: 35px;
+  height: 35px;
+}
+
+header h1 {
+  display: inline-block;
+  margin-top: 23px;
+  font: bold 30px Futura, Arial;
+  color: #ffffff;
+}
+
+header p {
+  float: right;
+  font: bolder 18px Futura, Arial;
+  color: #ffffff;
+  margin-top: 22px;
+  padding: 7px;
+  width: auto;
+}
+
+header button {
+  margin-top: 25px;
+  float: right;
+  margin-right: 35px;
+  width: 200px;
+}
