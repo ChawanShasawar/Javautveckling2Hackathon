@@ -19,7 +19,7 @@ function printMovieList (movies) {
             console.log("Klick på knapp", movie.id);
             printMovieInfo(movie)
         })
-
+        
         movieList.appendChild(li);
     })
 }
@@ -27,20 +27,27 @@ function printMovieList (movies) {
 
 function printMovieInfo(movie){
     movieInfo.innerHTML="";
-
+    
     console.log("movie info", movie);
-
+    
     let movieDiv =document.createElement("div");
     let movieHeadline = document.createElement("h2");
     movieHeadline.innerText=movie.original_title;
-
+    
     let movieText =document.createElement("p")
     movieText.innerText = movie.overview;
- 
+    
     let movieImg =document.createElement("img")
     movieImg.style.width ="500px"
     movieImg.src ="https:/image.tmdb.org/t/p/original/" + movie.poster_path;
- 
+    
+
+    
+    fetch('https://api.themoviedb.org/3/search/movie?query=' + movie.id + '&api_key=88d6f906b386ac47c004701d8f545df8')
+    .then(response => response.json())
+    .then(data=> {
+      relatedMovie(data)
+    })
     movieDiv.append(movieHeadline, movieText, movieImg)
     movieInfo.appendChild(movieDiv)
 }
@@ -48,18 +55,31 @@ function printMovieInfo(movie){
 // Search
 function searchMovie(search){
     let movieSearch = document.getElementById("searchMovie").value;
-
+    
     movieList.innerHTML="";
-
+    
     fetch('https://api.themoviedb.org/3/search/movie?query=' + movieSearch + '&api_key=88d6f906b386ac47c004701d8f545df8')
-      .then(response => response.json())
-      .then(data=> {
+    .then(response => response.json())
+    .then(data=> {
         printMovieList(data)
     })
-
+    
     console.log(movieSearch);
 }
 
+// Similiar
+function relatedMovie(movie){
+    let relatedMovies = document.createElement("h2");
+    relatedMovies.innerText="Related Movies" + movie.id;
+    relatedMovies.style.width ="100px"
+    let movieSearch = document.getElementById("searchMovie").value;
+   
+    //movieList.innerHTML="";
+    console.log("Tjorven" +movie);
+    movieInfo.append(relatedMovies, printMovieList(movie));
+
+    console.log(relatedMovie);
+}
 
 
 
