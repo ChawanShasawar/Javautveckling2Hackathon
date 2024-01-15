@@ -77,5 +77,12 @@ function searchMovie(search) {
 function relatedMovie(relatedMovies) {
   console.log("related", relatedMovies.results);
 
-  relatedMovies.results.forEach((movie) => {});
+  let relatedUl = document.createElement("ul");
+  movieInfo.appendChild(relatedUl);
+
+  relatedMovies.results.forEach((movie) => {
+    let relatedLi = document.createElement("li");
+    relatedLi.innerText = movie.original_title;
+    relatedUl.appendChild(relatedLi);
+  });
 }
