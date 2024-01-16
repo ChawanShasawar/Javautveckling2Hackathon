@@ -81,6 +81,7 @@ header button {
   background-color: #1b70a9;
 }
 
+
 button {
   padding: 10px;
   background-color: #3498db;
@@ -89,6 +90,11 @@ button {
   cursor: pointer;
   display: block;
   margin: 0 auto;
+  
+}
+
+button:hover {
+  background-color: #1b70a9;
 }
 
 #contentContainer {
