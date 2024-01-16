@@ -31,6 +31,11 @@ function printMovieList(movies) {
     let li = document.createElement("li");
     li.innerText = movie.original_title;
 
+    li.id = movie.id;
+
+    // wishlist
+    addWhishList(movie.id, li);
+
     li.addEventListener("click", () => {
       console.log("Klick på knapp", movie.id);
       printMovieInfo(movie);
@@ -86,19 +91,24 @@ function searchMovie(search) {
     });
 }
 
+let movieImg = document.createElement("img");
+movieImg.style.width = "500px";
+movieImg.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+
 // Similiar
 function relatedMovie(relatedMovies) {
   console.log("related", relatedMovies.results);
-  let titelRelatedMovies = document.createElement("h2");
-  titelRelatedMovies.innerText = "Liknande filmer:";
-
-  let relatedUl = document.createElement("ul");
-  movieInfo.append(titelRelatedMovies, relatedUl);
-
   relatedMovies.results.forEach((movie) => {
     let relatedLi = document.createElement("li");
-    relatedLi.innerText = movie.original_title;
-    relatedUl.appendChild(relatedLi);
+    let titelRelatedMovies = document.createElement("img");
+    relatedLi.appendChild(titelRelatedMovies);
+    let relatedUl = document.createElement("ul");
+    titelRelatedMovies.src =
+      "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+    titelRelatedMovies.style.width = "100px";
+
+    movieInfo.append(titelRelatedMovies, relatedUl, relatedLi);
+    console.log("https:/image.tmdb.org/t/p/original/" + movie.poster_path);
   });
 }
 
@@ -148,3 +158,48 @@ function printFavorites(movie, ul) {
 }
 
 getFavorites();
+
+// Whishlist
+function addWhishList(movieId, parent) {
+  let whishsList = JSON.parse(localStorage.getItem("list of wishlist")) || [];
+  let whishBtn = document.createElement("button");
+
+  whishBtn.innerHTML = whishsList.includes(movieId)
+    ? "Remove from whishlist"
+    : "Add to whishlist";
+  parent.appendChild(whishBtn);
+
+  whishBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    const index = whishsList.indexOf(movieId);
+    if (index !== -1) {
+      whishsList.splice(index, 1);
+      whishBtn.innerHTML = "Add to Whishlist";
+      console.log("addar whish", whishsList);
+    } else {
+      whishsList.push("ta bort önskan", movieId);
+      whishBtn.innerHTML = "Remove from Whishlist";
+
+      console.log(whishsList);
+    }
+    localStorage.setItem("list of wishlist", JSON.stringify(whishsList));
+  });
+}
+
+function printaddWhishList(movies) {
+  movies.results.forEach((movie) => {
+    let li = document.createElement("li");
+    li.innerText = movie.original_title;
+    li.id = movie.id;
+
+    addWhishList(movie.id, li);
+
+    li.addEventListener("click", () => {
+      printMovieInfo(movie);
+      console.log(movie.original);
+    });
+
+    movieList.appendChild(li);
+  });
+}
