@@ -1,6 +1,24 @@
 let movieList = document.getElementById("movieList");
 let movieInfo = document.getElementById("movieInfo");
+let bigDiv = document.getElementById("searchContainer");
 let favoritsList = [];
+let favoriteBtn = document.createElement("button");
+let listFromLocalStorage = JSON.parse(localStorage.getItem("list of favorits"));
+
+//get from local storage
+listFromLocalStorage.forEach((movie) => {
+  favoritsList.push(movie);
+});
+
+//favoritebtn
+favoriteBtn.innerText = "Favoriter";
+bigDiv.appendChild(favoriteBtn);
+
+favoriteBtn.addEventListener("click", () => {
+  movieList.innerHTML = "";
+  movieInfo.innerHTML = "";
+  getFavorites();
+});
 
 fetch(
   "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=88d6f906b386ac47c004701d8f545df8"
@@ -91,8 +109,42 @@ function addFavorite(parent) {
   favoritBtn.innerHTML = "Lägg till i favoriter";
   parent.appendChild(favoritBtn);
   favoritBtn.addEventListener("click", () => {
-    favoritsList.push(parent.id);
-    localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
-    console.log(favoritsList);
+    if (favoritsList.includes(parent.id)) {
+      console.log("den finns redan i listan");
+    } else {
+      favoritsList.push(parent.id);
+      localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
+    }
   });
 }
+
+//get favorites
+
+function getFavorites() {
+  favoritsList.forEach((movie) => {
+    console.log("id: " + movie);
+    //movie.stringify();
+    let ul = document.createElement("ul");
+    let tital = document.createElement("h2");
+    tital.innerText = "Favorit filmer";
+
+    fetch(
+      "https://api.themoviedb.org/3/movie/" +
+        movie +
+        "?api_key=88d6f906b386ac47c004701d8f545df8"
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        printFavorites(response, ul);
+      });
+    movieList.append(ul);
+  });
+}
+
+function printFavorites(movie, ul) {
+  let li = document.createElement("li");
+  li.innerText = movie.original_title;
+  ul.appendChild(li);
+}
+
+getFavorites();
