@@ -37,7 +37,6 @@ function printMovieList(movies) {
     addWhishList(movie.id, li);
 
     li.addEventListener("click", () => {
-      console.log("Klick på knapp", movie.id);
       printMovieInfo(movie);
     });
 
@@ -108,22 +107,29 @@ function relatedMovie(relatedMovies) {
     titelRelatedMovies.style.width = "100px";
 
     movieInfo.append(titelRelatedMovies, relatedUl, relatedLi);
-    console.log("https:/image.tmdb.org/t/p/original/" + movie.poster_path);
   });
 }
 
 //add to favorites
 
 function addFavorite(parent) {
-  let favoritBtn = document.createElement("button");
-  favoritBtn.innerHTML = "Lägg till i favoriter";
-  parent.appendChild(favoritBtn);
-  favoritBtn.addEventListener("click", () => {
+  let addFavoritBtn = document.createElement("button");
+  parent.appendChild(addFavoritBtn);
+  if (favoritsList.includes(parent.id)) {
+    addFavoritBtn.innerHTML = "Ta bort från favoriter";
+  } else {
+    addFavoritBtn.innerHTML = "Lägg till i favoriter";
+  }
+  addFavoritBtn.addEventListener("click", (e) => {
+    let index = favoritsList.indexOf(parent.id);
     if (favoritsList.includes(parent.id)) {
-      console.log("den finns redan i listan");
+      favoritsList.splice(index, 1);
+      localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
+      addFavoritBtn.innerHTML = "Lägg till i favoriter";
     } else {
       favoritsList.push(parent.id);
       localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
+      addFavoritBtn.innerHTML = "Ta bort från favoriter";
     }
   });
 }
