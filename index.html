@@ -16,13 +16,18 @@
     </header>
 
     <div id="searchContainer">
-      <input type="text" id="searchMovie" placeholder="Sök film och genre" oninput="searchMovie()" />
+      <input
+        type="text"
+        id="searchMovie"
+        placeholder="Sök film och genre"
+        oninput="searchMovie()"
+      />
       <input type="submit" id="searchButton" value="Sök" />
     </div>
 
     <div id="contentContainer">
       <div id="movieListContainer">
-        <h1>Movies</h1>
+        <h1 id="titel">Filmer</h1>
         <ul id="movieList"></ul>
       </div>
 

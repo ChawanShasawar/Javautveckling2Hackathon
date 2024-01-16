@@ -6,6 +6,7 @@ let favoriteBtn = document.createElement("button");
 let listFromLocalStorage = JSON.parse(localStorage.getItem("list of favorits"));
 let whishsList = [];
 let whishBtn = document.createElement("button");
+let listTitel = document.getElementById("titel");
 
 //get from local storage
 listFromLocalStorage.forEach((movie) => {
@@ -39,6 +40,7 @@ fetch(
   .then((data) => {});
 
 function printMovieList(movies) {
+  listTitel.innerText = "Filmer";
   movies.results.forEach((movie) => {
     let li = document.createElement("li");
     li.innerText = movie.original_title;
@@ -145,10 +147,17 @@ function addFavorite(parent) {
       favoritsList.splice(index, 1);
       localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
       addFavoritBtn.innerHTML = "Lägg till i favoriter";
+      listTitel.innerText = "Favoriter";
+
+      movieList.innerHTML = "";
+      getFavorites();
     } else {
       favoritsList.push(parent.id);
       localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
       addFavoritBtn.innerHTML = "Ta bort från favoriter";
+      movieList.innerHTML = "";
+
+      getFavorites();
     }
   });
 }
@@ -156,9 +165,8 @@ function addFavorite(parent) {
 //get favorites
 
 function getFavorites() {
+  listTitel.innerText = "Favoriter";
   favoritsList.forEach((movie) => {
-    console.log("id: " + movie);
-    //movie.stringify();
     let ul = document.createElement("ul");
     let tital = document.createElement("h2");
     tital.innerText = "Favorit filmer";
@@ -191,8 +199,6 @@ function printFavorites(movie, ul) {
     printMovieInfo(movie);
   });
 }
-
-getFavorites();
 
 // Whishlist
 function addWhishList(movieId, parent) {
