@@ -79,6 +79,7 @@ function relatedMovie(relatedMovies) {
 
   let relatedUl = document.createElement("ul");
   movieInfo.appendChild(relatedUl);
+  
 
   relatedMovies.results.forEach((movie) => {
     let relatedLi = document.createElement("li");
