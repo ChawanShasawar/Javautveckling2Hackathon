@@ -40,15 +40,73 @@ header button {
   width: 200px;
 }
 
-#searchContainer{
-  margin-top: 75px;
+
+#searchContainer {
+  text-align: center;
+  padding: 20px;
 }
-#relatedMovies{
+
+#searchMovie {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-style: none;
+  border: 1px solid #919191;
+  padding: 10px;
+  width: 300px;
+  margin: 0;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#searchMovie:focus {
+  outline-style: none;
+}
+
+#searchButton {
+  height: 37px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-style: none;
+  background-color: #3438f5;
+  padding: 0;
+  width: 40px;
+  margin: 0;
+  margin-left: -5px;
+  color: white;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#searchButton:hover {
+  cursor: pointer;
+  background-color: #181bd0;
+}
+
+button {
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#contentContainer {
   display: flex;
-
 }
 
-#movie{
-display: flex;
-
+#movieListContainer {
+  flex: 1;
+  padding: 20px;
 }
+
+#movieInfoContainer {
+  flex: 2;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#movieInfo {
+  max-width: 650px;
+}
+
