@@ -56,15 +56,24 @@ button {
   color: #fff;
   border: none;
   cursor: pointer;
+  display: block; 
+  margin: 0 auto; 
 }
 
 #contentContainer {
   display: flex;
 }
 
+#movieList{
+  list-style-type: none; 
+  padding: 0;
+  margin: 0;
+}
+
 #movieListContainer {
   flex: 1;
   padding: 20px;
+  
 }
 
 #movieInfoContainer {
@@ -76,5 +85,10 @@ button {
 
 #movieInfo {
   max-width: 650px; 
+}
+
+#movieInfo img {
+  display: block; 
+  margin: 0 auto 15px; 
 }
 
