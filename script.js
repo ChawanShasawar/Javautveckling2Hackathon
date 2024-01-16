@@ -95,22 +95,27 @@ let movieImg = document.createElement("img");
 movieImg.style.width = "500px";
 movieImg.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
 
-// Similiar
+// related movies
 function relatedMovie(relatedMovies) {
-  console.log("related", relatedMovies.results);
-  relatedMovies.results.forEach((movie) => {
-    let relatedLi = document.createElement("li");
-    let titelRelatedMovies = document.createElement("img");
-    relatedLi.appendChild(titelRelatedMovies);
-    let relatedUl = document.createElement("ul");
-    titelRelatedMovies.src =
-      "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
-    titelRelatedMovies.style.width = "100px";
 
-    movieInfo.append(titelRelatedMovies, relatedUl, relatedLi);
-    console.log("https:/image.tmdb.org/t/p/original/" + movie.poster_path);
+  let relatedMoviesGrid = document.createElement("div");
+  relatedMoviesGrid.className = "related-movies-grid";
+
+  relatedMovies.results.forEach((movie) => {
+    let movieDiv = document.createElement("div");
+    movieDiv.className = "movie";
+    
+    let movieImage = document.createElement("img");
+    movieImage.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+    movieImage.style.width = "100%";
+
+    movieDiv.appendChild(movieImage);
+    relatedMoviesGrid.appendChild(movieDiv);
   });
+
+  movieInfo.appendChild(relatedMoviesGrid);
 }
+
 
 //add to favorites
 
