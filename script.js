@@ -4,6 +4,8 @@ let bigDiv = document.getElementById("searchContainer");
 let favoritsList = [];
 let favoriteBtn = document.createElement("button");
 let listFromLocalStorage = JSON.parse(localStorage.getItem("list of favorits"));
+let whishsList = [];
+let whishBtn = document.createElement("button");
 
 //get from local storage
 listFromLocalStorage.forEach((movie) => {
@@ -18,6 +20,16 @@ favoriteBtn.addEventListener("click", () => {
   movieList.innerHTML = "";
   movieInfo.innerHTML = "";
   getFavorites();
+});
+
+//whishbtn
+whishBtn.innerText = "Önskelistan";
+bigDiv.appendChild(whishBtn);
+
+whishBtn.addEventListener("click", () => {
+  movieList.innerHTML = "";
+  movieInfo.innerHTML = "";
+  getWhish();
 });
 
 fetch(
@@ -94,20 +106,24 @@ let movieImg = document.createElement("img");
 movieImg.style.width = "500px";
 movieImg.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
 
-// Similiar
+// related movies
 function relatedMovie(relatedMovies) {
-  console.log("related", relatedMovies.results);
-  relatedMovies.results.forEach((movie) => {
-    let relatedLi = document.createElement("li");
-    let titelRelatedMovies = document.createElement("img");
-    relatedLi.appendChild(titelRelatedMovies);
-    let relatedUl = document.createElement("ul");
-    titelRelatedMovies.src =
-      "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
-    titelRelatedMovies.style.width = "100px";
+  let relatedMoviesGrid = document.createElement("div");
+  relatedMoviesGrid.className = "related-movies-grid";
 
-    movieInfo.append(titelRelatedMovies, relatedUl, relatedLi);
+  relatedMovies.results.forEach((movie) => {
+    let movieDiv = document.createElement("div");
+    movieDiv.className = "movie";
+
+    let movieImage = document.createElement("img");
+    movieImage.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+    movieImage.style.width = "100%";
+
+    movieDiv.appendChild(movieImage);
+    relatedMoviesGrid.appendChild(movieDiv);
   });
+
+  movieInfo.appendChild(relatedMoviesGrid);
 }
 
 //add to favorites
@@ -167,8 +183,8 @@ getFavorites();
 
 // Whishlist
 function addWhishList(movieId, parent) {
-  let whishsList = JSON.parse(localStorage.getItem("list of wishlist")) || [];
-  let whishBtn = document.createElement("button");
+  whishsList = JSON.parse(localStorage.getItem("list of wishlist")) || [];
+  whishBtn = document.createElement("button");
 
   whishBtn.innerHTML = whishsList.includes(movieId)
     ? "Remove from whishlist"
@@ -209,3 +225,32 @@ function printaddWhishList(movies) {
     movieList.appendChild(li);
   });
 }
+
+function getWhish() {
+  whishsList.forEach((movie) => {
+    console.log("id: " + movie);
+    //movie.stringify();
+    let ul = document.createElement("ul");
+    let tital = document.createElement("h2");
+    tital.innerText = "Önskelistan filmer";
+
+    fetch(
+      "https://api.themoviedb.org/3/movie/" +
+        movie +
+        "?api_key=88d6f906b386ac47c004701d8f545df8"
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        printWhish(response, ul);
+      });
+    movieList.append(ul);
+  });
+}
+
+function printWhish(movie, ul) {
+  let li = document.createElement("li");
+  li.innerText = movie.original_title;
+  ul.appendChild(li);
+}
+
+getWhish();
