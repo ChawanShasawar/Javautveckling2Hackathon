@@ -39,3 +39,16 @@ header button {
   margin-right: 35px;
   width: 200px;
 }
+
+#searchContainer{
+  margin-top: 75px;
+}
+#relatedMovies{
+  display: flex;
+
+}
+
+#movie{
+display: flex;
+
+}
