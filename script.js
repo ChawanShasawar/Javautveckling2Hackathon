@@ -5,13 +5,9 @@ fetch(
   "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&api_key=88d6f906b386ac47c004701d8f545df8"
 )
   .then((res) => res.json())
-  .then((data) => {
-    // printMovieList(data)
-  });
+  .then((data) => {});
 
 function printMovieList(movies) {
-  // console.log("movie list", movies);
-
   movies.results.forEach((movie) => {
     let li = document.createElement("li");
     li.innerText = movie.original_title;
@@ -76,9 +72,11 @@ function searchMovie(search) {
 // Similiar
 function relatedMovie(relatedMovies) {
   console.log("related", relatedMovies.results);
+  let titelRelatedMovies = document.createElement("h2");
+  titelRelatedMovies.innerText = "Liknande filmer:";
 
   let relatedUl = document.createElement("ul");
-  movieInfo.appendChild(relatedUl);
+  movieInfo.append(titelRelatedMovies, relatedUl);
 
   relatedMovies.results.forEach((movie) => {
     let relatedLi = document.createElement("li");
