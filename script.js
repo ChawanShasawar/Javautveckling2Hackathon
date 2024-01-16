@@ -8,19 +8,26 @@ fetch(
   .then((res) => res.json())
   .then((data) => {});
 
-function printMovieList(movies) {
-  movies.results.forEach((movie) => {
-    let li = document.createElement("li");
-    li.innerText = movie.original_title;
+  function printMovieList(movies) {
 
-    li.addEventListener("click", () => {
-      console.log("Klick på knapp", movie.id);
-      printMovieInfo(movie);
+    movies.results.forEach((movie) => {
+      let li = document.createElement("li");
+      li.innerText = movie.original_title;
+  
+      li.id = movie.id;
+  
+      // wishlist 
+      addWhishList(movie.id, li);
+  
+      li.addEventListener("click", () => {
+        console.log("Klick på knapp", movie.id);
+        printMovieInfo(movie);      
+      });
+  
+      movieList.appendChild(li);
     });
-
-    movieList.appendChild(li);
-  });
-}
+  }
+  
 
 function printMovieInfo(movie) {
   movieInfo.innerHTML = "";
@@ -101,5 +108,52 @@ function addFavorite(parent) {
     favoritsList.push(parent.id);
     localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
     console.log(favoritsList);
+  });
+}
+
+// Whishlist
+function addWhishList(movieId, parent) {
+  
+  let whishsList = JSON.parse(localStorage.getItem("list of wishlist")) || [];
+  let whishBtn = document.createElement("button");
+
+  whishBtn.innerHTML = whishsList.includes(movieId) ? "Remove from whishlist" : "Add to whishlist";
+  parent.appendChild(whishBtn);
+
+  whishBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+      const index = whishsList.indexOf(movieId);
+        if (index !== -1) {
+          whishsList.splice(index, 1);
+          whishBtn.innerHTML = "Add to Whishlist";
+          console.log("addar whish", whishsList);
+        } else {
+          whishsList.push("ta bort önskan",movieId); 
+            whishBtn.innerHTML = "Remove from Whishlist";
+
+            console.log(whishsList);
+
+        }
+        localStorage.setItem("list of wishlist", JSON.stringify(whishsList));
+
+    });
+}
+
+function printaddWhishList(movies) {        
+  movies.results.forEach((movie) => {
+    
+      let li = document.createElement("li");
+      li.innerText = movie.original_title;
+      li.id = movie.id; 
+
+      addWhishList(movie.id, li); 
+
+      li.addEventListener("click", () => {
+          printMovieInfo(movie);
+          console.log(movie.original);
+      });
+
+      movieList.appendChild(li);
   });
 }
