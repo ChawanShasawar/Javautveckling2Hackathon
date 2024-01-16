@@ -51,6 +51,8 @@ function printMovieInfo(movie) {
   addFavorite(movieDiv);
 }
 
+
+
 // Search
 function searchMovie(search) {
   let movieSearch = document.getElementById("searchMovie").value;
@@ -68,20 +70,25 @@ function searchMovie(search) {
     });
 }
 
+
+let movieImg = document.createElement("img");
+movieImg.style.width = "500px";
+movieImg.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+
 // Similiar
 function relatedMovie(relatedMovies) {
   console.log("related", relatedMovies.results);
-  let titelRelatedMovies = document.createElement("h2");
-  titelRelatedMovies.innerText = "Liknande filmer:";
-
-  let relatedUl = document.createElement("ul");
-  movieInfo.append(titelRelatedMovies, relatedUl);
-
   relatedMovies.results.forEach((movie) => {
     let relatedLi = document.createElement("li");
-    relatedLi.innerText = movie.original_title;
-    relatedUl.appendChild(relatedLi);
-  });
+    let titelRelatedMovies = document.createElement("img");
+    relatedLi.appendChild(titelRelatedMovies)
+    let relatedUl = document.createElement("ul");
+    titelRelatedMovies.src=  "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+    titelRelatedMovies.style.width = "100px";
+
+    movieInfo.append(titelRelatedMovies, relatedUl, relatedLi);
+    console.log("https:/image.tmdb.org/t/p/original/" + movie.poster_path);
+});
 }
 
 //add to favorites
