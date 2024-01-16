@@ -7,7 +7,6 @@ let listFromLocalStorage = JSON.parse(localStorage.getItem("list of favorits"));
 let whishsList = [];
 let whishBtn = document.createElement("button");
 
-
 //get from local storage
 listFromLocalStorage.forEach((movie) => {
   favoritsList.push(movie);
@@ -50,7 +49,6 @@ function printMovieList(movies) {
     addWhishList(movie.id, li);
 
     li.addEventListener("click", () => {
-      console.log("Klick på knapp", movie.id);
       printMovieInfo(movie);
     });
 
@@ -110,38 +108,47 @@ movieImg.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
 
 // related movies
 function relatedMovie(relatedMovies) {
-
   let relatedMoviesGrid = document.createElement("div");
   relatedMoviesGrid.className = "related-movies-grid";
 
   relatedMovies.results.forEach((movie) => {
     let movieDiv = document.createElement("div");
     movieDiv.className = "movie";
-    
+
     let movieImage = document.createElement("img");
     movieImage.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
     movieImage.style.width = "100%";
 
     movieDiv.appendChild(movieImage);
     relatedMoviesGrid.appendChild(movieDiv);
+    movieImage.addEventListener("click", () => {
+      printMovieInfo(movie);
+    });
   });
 
   movieInfo.appendChild(relatedMoviesGrid);
 }
 
-
 //add to favorites
 
 function addFavorite(parent) {
-  let favoritBtn = document.createElement("button");
-  favoritBtn.innerHTML = "Lägg till i favoriter";
-  parent.appendChild(favoritBtn);
-  favoritBtn.addEventListener("click", () => {
+  let addFavoritBtn = document.createElement("button");
+  parent.appendChild(addFavoritBtn);
+  if (favoritsList.includes(parent.id)) {
+    addFavoritBtn.innerHTML = "Ta bort från favoriter";
+  } else {
+    addFavoritBtn.innerHTML = "Lägg till i favoriter";
+  }
+  addFavoritBtn.addEventListener("click", (e) => {
+    let index = favoritsList.indexOf(parent.id);
     if (favoritsList.includes(parent.id)) {
-      console.log("den finns redan i listan");
+      favoritsList.splice(index, 1);
+      localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
+      addFavoritBtn.innerHTML = "Lägg till i favoriter";
     } else {
       favoritsList.push(parent.id);
       localStorage.setItem("list of favorits", JSON.stringify(favoritsList));
+      addFavoritBtn.innerHTML = "Ta bort från favoriter";
     }
   });
 }
@@ -171,8 +178,18 @@ function getFavorites() {
 
 function printFavorites(movie, ul) {
   let li = document.createElement("li");
-  li.innerText = movie.original_title;
+  let img = document.createElement("img");
+  img.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+  let h2 = document.createElement("h2");
+  h2.innerText = movie.original_title;
+  img.style.width = "50px";
+
+  li.append(h2, img);
   ul.appendChild(li);
+
+  li.addEventListener("click", () => {
+    printMovieInfo(movie);
+  });
 }
 
 getFavorites();
@@ -180,7 +197,7 @@ getFavorites();
 // Whishlist
 function addWhishList(movieId, parent) {
   whishsList = JSON.parse(localStorage.getItem("list of wishlist")) || [];
- whishBtn = document.createElement("button");
+  whishBtn = document.createElement("button");
 
   whishBtn.innerHTML = whishsList.includes(movieId)
     ? "Remove from whishlist"
@@ -196,7 +213,7 @@ function addWhishList(movieId, parent) {
       whishBtn.innerHTML = "Add to Whishlist";
       console.log("addar whish", whishsList);
     } else {
-      whishsList.push("ta bort önskan", movieId);
+      whishsList.push(movieId);
       whishBtn.innerHTML = "Remove from Whishlist";
 
       console.log(whishsList);
@@ -221,11 +238,6 @@ function printaddWhishList(movies) {
     movieList.appendChild(li);
   });
 }
-
-
-
-
-
 
 function getWhish() {
   whishsList.forEach((movie) => {
@@ -255,7 +267,3 @@ function printWhish(movie, ul) {
 }
 
 getWhish();
-
-
-
-
