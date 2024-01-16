@@ -121,6 +121,9 @@ function relatedMovie(relatedMovies) {
 
     movieDiv.appendChild(movieImage);
     relatedMoviesGrid.appendChild(movieDiv);
+    movieImage.addEventListener("click", () => {
+      printMovieInfo(movie);
+    });
   });
 
   movieInfo.appendChild(relatedMoviesGrid);
@@ -175,8 +178,18 @@ function getFavorites() {
 
 function printFavorites(movie, ul) {
   let li = document.createElement("li");
-  li.innerText = movie.original_title;
+  let img = document.createElement("img");
+  img.src = "https:/image.tmdb.org/t/p/original/" + movie.poster_path;
+  let h2 = document.createElement("h2");
+  h2.innerText = movie.original_title;
+  img.style.width = "50px";
+
+  li.append(h2, img);
   ul.appendChild(li);
+
+  li.addEventListener("click", () => {
+    printMovieInfo(movie);
+  });
 }
 
 getFavorites();
@@ -200,7 +213,7 @@ function addWhishList(movieId, parent) {
       whishBtn.innerHTML = "Add to Whishlist";
       console.log("addar whish", whishsList);
     } else {
-      whishsList.push("ta bort önskan", movieId);
+      whishsList.push(movieId);
       whishBtn.innerHTML = "Remove from Whishlist";
 
       console.log(whishsList);
