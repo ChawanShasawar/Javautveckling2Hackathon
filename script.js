@@ -242,19 +242,19 @@ function getWhish() {
     )
       .then((response) => response.json())
       .then((response) => {
-        printWhishes(response, ul);
+        printWhish(response, ul);
       });
     movieList.append(ul);
   });
 }
 
-function printWhishes(movie, ul) {
+function printWhish(movie, ul) {
   let li = document.createElement("li");
   li.innerText = movie.original_title;
   ul.appendChild(li);
 }
 
-getWhishes ();
+getWhish();
 
 
 
